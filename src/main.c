@@ -41,7 +41,7 @@ static volatile int value2 = 0;
 static volatile int value3 = 0;
 static volatile int direccion = 0;
 static int act = 0;
-static int stop = 0;
+static double stop = 0;
 
 
 static volatile int64_t antireizq = 0;
@@ -238,7 +238,7 @@ void app_main() {
             timer_set_counter_value(TIMER_GROUP_0, TIMER_0, 0); // reinicio el timer 
             
             int duty = adc_raw;
-
+            stop = duty;
             ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, duty);
             ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0);
         }
@@ -247,7 +247,7 @@ void app_main() {
             if(stop<4095){
                 ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, stop);
                 ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0);
-                stop +=35;
+                stop = stop+10;
             } else if (stop>4095){
                 stop=4095;
             } else {
@@ -269,7 +269,7 @@ void app_main() {
             if(stop<4095){
                 ledc_set_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0, stop);
                 ledc_update_duty(LEDC_LOW_SPEED_MODE, LEDC_CHANNEL_0);
-                stop +=35;
+                stop = stop+10;
             } else if (stop>4095){
                 stop=4095;
             }else {
